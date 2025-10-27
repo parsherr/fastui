@@ -12,10 +12,10 @@ export function HeaderLogo() {
   return (
     <Link href="/" className={cn('flex items-center gap-2 mr-auto lg:mr-0')}>
       <Image
-        src="/logo.svg"
+        src="/logo.png"
         alt={`${siteConfig.name}'s logo`}
-        width={32}
-        height={32}
+        width={38}
+        height={38}
       />
       <h1 className={cn('text-base tracking-wide', 'font-title')}>
         <span className="font-light">{guara}</span>

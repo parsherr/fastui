@@ -60,6 +60,39 @@ export function Contribute({ doc }: { doc: Doc }) {
           </li>
         ))}
       </ul>
+
+      {/* Compact Ad Section at the bottom */}
+      <div className="mt-6 flex flex-col items-center">
+        <div className="w-[180px] bg-background border rounded-xl shadow-sm flex flex-col items-center overflow-hidden p-0">
+          <div className="w-full">
+            <img
+              src="https://github.com/user-attachments/assets/71cdb374-23af-4053-b583-8076ee6e1e9b"
+              alt="Setscript.com"
+              className="w-full rounded-t-xl border-b"
+              style={{
+                aspectRatio: '16/9',
+                objectFit: 'cover',
+                maxHeight: '110px',
+                marginBottom: 0,
+              }}
+            />
+          </div>
+          <div className="w-full flex flex-col items-center px-2 pt-2 pb-3">
+            <h3 className="font-semibold text-m text-center">Setscript.com</h3>
+            <p className="text-[14px] text-muted-foreground text-center leading-tight">
+              New gen code share platform.
+            </p>
+            <a
+              href="https://magicui.design/templates"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-2 px-2 py-1 rounded bg-primary text-primary-foreground font-medium text-[13px] text-center shadow hover:bg-primary/90 transition w-full"
+            >
+              Explore
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

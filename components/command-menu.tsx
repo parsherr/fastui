@@ -23,7 +23,36 @@ import { cn } from '@/lib/utils';
 
 import { docsConfig } from '@/config/docs';
 
-import { useKeypress } from '@/registry/hooks/use-keypress';
+function useKeypress(options: {
+  combo: string[];
+  callback: (e: KeyboardEvent) => void;
+  preventDefault?: boolean;
+}) {
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      const key = e.key.toLowerCase();
+      const isCmd = e.metaKey || e.ctrlKey;
+
+      const matchesCombo = options.combo.some((combo) => {
+        if (combo === '/') return key === '/';
+        const [modifier, k] = combo.split('+');
+        return (
+          (modifier === 'meta' || modifier === 'ctrl') && isCmd && k === key
+        );
+      });
+
+      if (matchesCombo) {
+        if (options.preventDefault) {
+          e.preventDefault();
+        }
+        options.callback(e);
+      }
+    };
+
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [options]);
+}
 
 export function CommandMenu({ ...props }: DialogProps) {
   const router = useRouter();

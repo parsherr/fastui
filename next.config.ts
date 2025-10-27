@@ -8,7 +8,14 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizeCss: true,
   },
-  /* config options here */
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'magicui.design',
+      },
+    ],
+  },
   async redirects() {
     return [
       {

@@ -8,8 +8,8 @@ import remarkGfm from 'remark-gfm';
 import { createHighlighter } from 'shiki';
 import { visit } from 'unist-util-visit';
 
-import { rehypeComponent } from '@/lib/rehype-component';
-import { rehypeNpmCommand } from '@/lib/rehype-npm-command';
+import { rehypeComponent } from './lib/rehype-component';
+import { rehypeNpmCommand } from './lib/rehype-npm-command';
 
 const prettyCodeOptions: Options = {
   theme: 'github-dark',
@@ -191,6 +191,53 @@ const docs = defineCollection({
   },
 });
 
+const templates = defineCollection({
+  name: 'Templates',
+  directory: 'content/docs/templates',
+  include: '**/*.mdx',
+  schema: (z) => ({
+    title: z.string(),
+    description: z.string().optional(),
+    published: z.boolean().default(true),
+    date: z.string().optional(),
+    toc: z.boolean().optional().default(true),
+    image: z.string().optional(),
+  }),
+  transform: async (document, context) => {
+    const slugAsParams = document._meta.path
+      .replace(/\\/g, '/')
+      .replace(/\/index$/, '');
+
+    const body = await compileMDX(context, document, {
+      remarkPlugins: [codeImport, remarkGfm],
+      rehypePlugins: [
+        rehypeSlug,
+        rehypeComponent,
+        rehypeNpmCommand,
+        [
+          rehypeAutolinkHeadings,
+          {
+            properties: {
+              className: ['subheading-anchor'],
+              ariaLabel: 'Link to section',
+            },
+          },
+        ],
+      ],
+    });
+
+    return {
+      ...document,
+      slug: `/docs/templates/${slugAsParams}`,
+      slugAsParams: slugAsParams,
+      body: {
+        raw: document.content,
+        code: body,
+      },
+    };
+  },
+});
+
 export default defineConfig({
-  collections: [docs, pages, showcases],
+  collections: [docs, templates, pages, showcases],
 });

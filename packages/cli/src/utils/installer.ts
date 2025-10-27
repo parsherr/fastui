@@ -11,7 +11,7 @@ import { logger } from '@/src/utils/logger';
  */
 const CONFIG = {
   REGISTRY_URL_DEV: 'http://localhost:3000/r',
-  REGISTRY_URL_PROD: 'https://guarahooks.com/r',
+  REGISTRY_URL_PROD: 'https://fastui.site/r',
   MAX_CONCURRENT_DOWNLOADS: 5,
   RETRY_ATTEMPTS: 3,
   RETRY_DELAY: 1000, // ms

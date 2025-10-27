@@ -8,11 +8,42 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { cn } from '@/lib/utils';
 
-import { useConfig } from '@/hooks/use-config';
-import { useMounted } from '@/hooks/use-mounted';
 import { NpmCommands } from '@/types/unist';
 
 import { Icons } from './icons';
+
+// Simple hooks implementation
+function useMounted() {
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  return mounted;
+}
+
+type Config = {
+  packageManager: 'npm' | 'pnpm' | 'yarn' | 'bun';
+};
+
+const configKey = 'package-manager-preference';
+function useConfig(): [Config, (config: Config) => void] {
+  const [config, setConfig] = React.useState<Config>(() => {
+    if (typeof window === 'undefined') return { packageManager: 'pnpm' };
+    try {
+      const saved = localStorage.getItem(configKey);
+      return saved ? JSON.parse(saved) : { packageManager: 'pnpm' };
+    } catch {
+      return { packageManager: 'pnpm' };
+    }
+  });
+
+  const setConfigWithStorage = React.useCallback((newConfig: Config) => {
+    setConfig(newConfig);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(configKey, JSON.stringify(newConfig));
+    }
+  }, []);
+
+  return [config, setConfigWithStorage];
+}
 
 export function CodeBlockCommand({
   __npmCommand__,

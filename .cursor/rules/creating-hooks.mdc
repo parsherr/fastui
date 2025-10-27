@@ -273,7 +273,7 @@ export function useHook(): Return {
   title: 'UseHookDemo',
   description: 'use-hook demonstration.',
   registryDependencies: [
-    'https://guarahooks.com/r/use-hook.json',
+    'https://fastui.site/r/use-hook.json',
   ],
   files: [{
     path: 'registry/example/use-hook-demo.tsx',

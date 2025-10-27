@@ -9,8 +9,8 @@ import { examples } from '../registry/registry-examples';
 import { hooks } from '../registry/registry-hooks';
 
 const registry: Registry = {
-  name: 'guarahooks',
-  homepage: 'https://guarahooks.com/',
+  name: 'fastyi',
+  homepage: 'https://fastui.site/',
   items: [...hooks, ...examples],
 };
 

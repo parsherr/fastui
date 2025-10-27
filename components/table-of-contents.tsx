@@ -5,7 +5,12 @@ import { useEffect, useMemo, useState } from 'react';
 import type { TableOfContents } from '@/lib/toc';
 import { cn } from '@/lib/utils';
 
-import { useMounted } from '@/hooks/use-mounted';
+// Simple mounted hook implementation
+function useMounted() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  return mounted;
+}
 
 interface TocProps {
   toc: TableOfContents;
@@ -16,15 +21,12 @@ export function TableOfContents({ toc }: TocProps) {
     if (!toc.items || toc.items.length === 0) {
       return toc;
     }
-
     const [linksInSteps, ...rest] = toc.items;
-
     if (linksInSteps.items && linksInSteps.items.length > 0) {
       return {
         items: [...linksInSteps.items, ...rest],
       };
     }
-
     return toc;
   }, [toc]);
 

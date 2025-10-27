@@ -4,7 +4,7 @@ import { registrySchema, type RegistryItem } from '@/src/registry/schemas';
 import { handleError } from '@/src/utils/handle-error';
 
 const REGISTRY_URL_DEV = 'http://localhost:3000/r/registry.json';
-const REGISTRY_URL_PROD = 'https://guarahooks.com/r/registry.json';
+const REGISTRY_URL_PROD = 'https://fastui.site/r/registry.json';
 
 export interface Hook {
   name: string;

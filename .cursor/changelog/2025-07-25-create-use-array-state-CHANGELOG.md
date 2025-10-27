@@ -172,7 +172,7 @@ config/docs.ts                                 (+5 lines)
 
 The `useArrayState` hook is fully implemented and ready for use:
 
-1. **CLI Installation**: `npx shadcn@latest add "https://guarahooks.com/r/use-array-state"`
+1. **CLI Installation**: `npx shadcn@latest add "https://fastui.site/r/use-array-state"`
 2. **Navigation**: Available at `/docs/hooks/use-array-state`
 3. **Category**: State Management
 4. **Status**: ✅ Completed

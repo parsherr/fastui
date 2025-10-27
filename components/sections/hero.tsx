@@ -16,16 +16,11 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-// NOTE: We moved GitHub stars fetching to client-side to avoid server-only
-// runtime dependency (process.env / server fetch) so the site can run as a
-// frontend-only app on Vercel.
-import { getHooksCount } from '@/lib/hooks';
 import { cn } from '@/lib/utils';
 
 import { siteConfig } from '@/config/site';
 
 export function Hero() {
-  const hooksCount = getHooksCount();
   const [githubStars, setGithubStars] = useState<number | null>(null);
 
   useEffect(() => {
@@ -53,13 +48,20 @@ export function Hero() {
 
   return (
     <div
-      id="hooks-hero"
+      id="hero"
       className={cn(
         'relative w-full h-[calc(100dvh-112px)]',
         'flex flex-col items-center justify-center grow gap-8',
         'border-b ',
       )}
     >
+      {/* Spotlight effect background */}
+      <Spotlight
+        className={cn(
+          'absolute -top-86 left-1/2 -translate-x-4/8 opacity-60 pointer-events-none z-0',
+        )}
+        fill="white"
+      />
       <hgroup
         className={cn(
           'text-center',
@@ -74,7 +76,7 @@ export function Hero() {
             'max-w-[18ch]',
           )}
         >
-          Hooks Library for Software Engineers
+          Tempalte and Component Library for Web Developers
         </h1>
         <p className={cn('text-sm lg:text-base max-w-[34ch]')}>
           Free and open-source hooks build with{' '}
@@ -135,18 +137,7 @@ export function Hero() {
           'absolute left-8 lg:left-1/2 lg:-translate-x-1/2 bottom-8',
         )}
       />
-      <p
-        className={cn(
-          'absolute bottom-8 right-8',
-          'text-sm text-muted-foreground',
-        )}
-      >
-        Currently with {hooksCount} hooks.
-      </p>
-      <Spotlight
-        className="-top-20 left-0 md:-top-40 md:left-80"
-        fill="white"
-      />
+      {/* ...existing code... */}
       <GridPattern
         width={30}
         height={30}

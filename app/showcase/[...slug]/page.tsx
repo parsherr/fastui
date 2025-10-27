@@ -37,7 +37,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const url = 'https://guarahooks.com';
+  const url = 'https://fastui.site';
 
   const ogUrl = new URL(`${url}/og`);
   ogUrl.searchParams.set('heading', page.title);

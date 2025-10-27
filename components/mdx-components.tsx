@@ -6,9 +6,6 @@ import { useMDXComponent } from '@content-collections/mdx/react';
 import { Callout } from '@/components/callout';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
-import { HookPreview } from '@/components/hook-preview';
-import { HookSource } from '@/components/hook-source';
-import { HooksList } from '@/components/hooks-list';
 import RepoDownload from '@/components/repo-download';
 import TechStack from '@/components/tech-stack';
 import TemplatePreview from '@/components/template-preview';
@@ -57,12 +54,7 @@ const components = {
   RepoDownload,
   TemplatePreview,
   Image,
-  HookPreview,
-  HooksList,
   BlurFade: BlurFade,
-  HookSource: (props: React.ComponentProps<typeof HookSource>) => (
-    <HookSource {...props} />
-  ),
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
     <h1
       className={cn(

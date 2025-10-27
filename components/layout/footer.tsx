@@ -28,15 +28,15 @@ export function Footer() {
           <span className="font-bold">{hooks}</span>
         </p>
         <p className="text-muted-foreground text-sm">
-          Brought to you by{' '}
+          Made by by{' '}
           <Link
             href={siteConfig.authorUrl}
             className="underline"
             target="_blank"
           >
-            h3rmel
-          </Link>
-          .
+            parsherr
+          </Link>{' '}
+          with love
         </p>
       </section>
     </footer>
