@@ -7,6 +7,8 @@ import posthog from 'posthog-js';
 import { Icons } from '@/components/icons';
 
 import { cn } from '@/lib/utils';
+import { siteConfig } from '@/config/site';
+var version = siteConfig.version
 
 export function Banner() {
   return (
@@ -31,7 +33,7 @@ export function Banner() {
           className="inline-flex text-xs leading-normal md:text-sm max-w-[36ch] md:max-w-full"
         >
           <span className="font-medium">
-            There is somethink new! Check out the change log! 🚀
+            There is somethink new with {version}! Check out the change log! 🚀
           </span>
           <Icons.Chevron.Right
             className={cn(

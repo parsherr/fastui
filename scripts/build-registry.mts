@@ -1,17 +1,17 @@
-import { exec } from 'child_process';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { exec } from "child_process";
+import { promises as fs } from "fs";
+import path from "path";
+import { rimraf } from "rimraf";
+import { Registry } from "shadcn/registry";
+import { examples } from "../registry/registry-examples";
 
-import { rimraf } from 'rimraf';
-import { Registry } from 'shadcn/registry';
-
-import { examples } from '../registry/registry-examples';
-import { hooks } from '../registry/registry-hooks';
-
+// ------------------------------------------------------
+// Minimal registry config (hooks kısmı kaldırıldı)
+// ------------------------------------------------------
 const registry: Registry = {
-  name: 'fastyi',
-  homepage: 'https://fastui.site/',
-  items: [...hooks, ...examples],
+  name: "fastyi",
+  homepage: "https://fastui.site/",
+  items: [...examples], // sadece examples kullanıyoruz
 };
 
 // ------------------------------------------------------
@@ -26,31 +26,30 @@ import * as React from "react"
 import type { RegistryItem } from "../components/hook-preview"
 
 export const Index: Record<string, RegistryItem> = {`;
+
   for (const item of registry.items) {
     const resolveFiles = item.files?.map((file) => `${file.path}`);
-    if (!resolveFiles) {
-      continue;
-    }
+    if (!resolveFiles) continue;
 
     const componentPath = item.files?.[0]?.path
       ? `@/${item.files[0].path}`
-      : '';
+      : "";
 
     index += `
   "${item.name}": {
     name: ${JSON.stringify(item.name)},
-    description: ${JSON.stringify(item.description ?? '')},
+    description: ${JSON.stringify(item.description ?? "")},
     type: "${item.type}",
     registryDependencies: ${JSON.stringify(item.registryDependencies)},
     files: [${item.files?.map((file) => {
-      const filePath = `${typeof file === 'string' ? file : file.path}`;
+      const filePath = `${typeof file === "string" ? file : file.path}`;
       const resolvedFilePath = path.resolve(filePath);
-      return typeof file === 'string'
+      return typeof file === "string"
         ? `"${resolvedFilePath}"`
         : `{
       path: "${filePath}",
       type: "${file.type}",
-      target: "${file.target ?? ''}"
+      target: "${file.target ?? ""}"
     }`;
     })}],
     component: ${
@@ -60,109 +59,65 @@ export const Index: Record<string, RegistryItem> = {`;
       const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
       return { default: mod.default || mod[exportName] }
     })`
-        : 'null'
+        : "null"
     },
     meta: ${JSON.stringify(item.meta)},
   },`;
   }
 
   index += `
-  }`;
+}`;
 
-  // Write style index.
-  rimraf.sync(path.join(process.cwd(), '__registry__/index.tsx'));
-  await fs.writeFile(path.join(process.cwd(), '__registry__/index.tsx'), index);
+  rimraf.sync(path.join(process.cwd(), "__registry__/index.tsx"));
+  await fs.writeFile(path.join(process.cwd(), "__registry__/index.tsx"), index);
 }
 
 // ------------------------------------------------------
 // Build the registry json file.
 // ------------------------------------------------------
 async function buildRegistryJsonFile() {
-  // 1. Fix the path for registry items.
   const fixedRegistry = {
     ...registry,
     items: registry.items.map((item) => {
-      const files = item.files?.map((file) => {
-        return {
-          ...file,
-          path: `${file.path}`,
-        };
-      });
-
-      return {
-        ...item,
-        files,
-      };
+      const files = item.files?.map((file) => ({
+        ...file,
+        path: `${file.path}`,
+      }));
+      return { ...item, files };
     }),
   };
 
-  // 2. Write the content of the registry to `public/r/registry.json`
   rimraf.sync(path.join(process.cwd(), `public/r/registry.json`));
   await fs.writeFile(
     path.join(process.cwd(), `public/r/registry.json`),
-    JSON.stringify(fixedRegistry, null, 2),
+    JSON.stringify(fixedRegistry, null, 2)
   );
 }
 
 // ------------------------------------------------------
-// Build the registry.
+// Build the registry
 // ------------------------------------------------------
 async function buildRegistry() {
-  // 1. Build the registry
   await new Promise((resolve, reject) => {
     const process = exec(
-      `pnpm dlx shadcn build public/r/registry.json --output ./public/r/`,
+      `pnpm dlx shadcn build public/r/registry.json --output ./public/r/`
     );
 
-    process.on('exit', (code) => {
-      if (code === 0) {
-        resolve(undefined);
-      } else {
-        reject(new Error(`Process exited with code ${code}`));
-      }
+    process.on("exit", (code) => {
+      if (code === 0) resolve(undefined);
+      else reject(new Error(`Process exited with code ${code}`));
     });
   });
-
-  // 2. Replace `@/registry/hooks/` with `@/hooks/guarahooks/` in all files
-  const files = await fs.readdir(path.join(process.cwd(), 'public/r'));
-
-  await Promise.all(
-    files.map(async (file) => {
-      const content = await fs.readFile(
-        path.join(process.cwd(), 'public/r', file),
-        'utf-8',
-      );
-
-      const registryItem = JSON.parse(content);
-
-      // Replace `@/registry/guarahooks/` in files
-      registryItem.files = registryItem.files?.map((file) => {
-        if (file.content?.includes('@/registry/hooks')) {
-          file.content = file.content?.replaceAll(
-            '@/registry/hooks',
-            '@/hooks/guarahooks',
-          );
-        }
-        return file;
-      });
-
-      // Write the file back
-      await fs.writeFile(
-        path.join(process.cwd(), 'public/r', file),
-        JSON.stringify(registryItem, null, 2),
-      );
-    }),
-  );
 }
 
 try {
-  console.log('🗂️ Building registry/__index__.tsx...');
+  console.log("🗂️ Building registry/__index__.tsx...");
   await buildRegistryIndex();
 
-  console.log('🗂️ Building registry.json...');
+  console.log("🗂️ Building registry.json...");
   await buildRegistryJsonFile();
 
-  console.log('🏗️ Building registry...');
+  console.log("🏗️ Building registry...");
   await buildRegistry();
 } catch (error) {
   console.error(error);

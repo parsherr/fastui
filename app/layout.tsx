@@ -13,6 +13,7 @@ import { PostHogProvider } from '@/components/posthog-provider';
 import { ThemeProvider } from '@/components/theme/theme-provider';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import { WelcomeModal } from "@/components/layout/welcome-modal";
 
 import { cn } from '@/lib/utils';
 
@@ -68,6 +69,7 @@ export default function RootLayout({
         <PostHogProvider>
           <ThemeProvider attribute="class" defaultTheme="dark">
             <TooltipProvider delayDuration={200}>
+              <WelcomeModal />
               <Banner />
               <Header />
               <main className={cn('grow flex flex-col', 'size-full')}>

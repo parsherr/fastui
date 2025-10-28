@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 import { siteConfig } from '@/config/site';
+var version = siteConfig.version
 
 const guara = siteConfig.name.slice(0, 5);
 const hooks = siteConfig.name.slice(5);
@@ -18,8 +19,8 @@ export function HeaderLogo() {
         height={38}
       />
       <h1 className={cn('text-base tracking-wide', 'font-title')}>
-        <span className="font-light">{guara}</span>
-        <span className="font-bold">{hooks}</span>
+        <span className="font-light">{"fastui"}</span>
+        {/* <span className='text-[11px] ml-2'>{version}</span> */}
       </h1>
     </Link>
   );

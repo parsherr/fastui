@@ -1,3 +1,5 @@
+import { version } from "os";
+
 export const siteConfig = {
   name: 'fastui',
   url: 'https://fastui.site',
@@ -16,6 +18,7 @@ export const siteConfig = {
     'Component Library',
     'Template Library',
   ],
+  version: 'v0.05',
   ogImage: 'https://guarahooks.com/og.webp',
 };
 

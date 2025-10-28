@@ -28,15 +28,22 @@ export function Footer() {
           <span className="font-bold">{hooks}</span>
         </p>
         <p className="text-muted-foreground text-sm">
-          Made by by{' '}
+          Built by{' '}
           <Link
             href={siteConfig.authorUrl}
             className="underline"
             target="_blank"
           >
             parsherr
+          </Link>.{' '}
+          The source code is available on{' '}
+          <Link
+            href={"https://github.com/parsher/fastui"}
+            className="underline"
+            target="_blank"
+          >
+            Github
           </Link>{' '}
-          with love
         </p>
       </section>
     </footer>

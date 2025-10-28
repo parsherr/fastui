@@ -1,17 +1,18 @@
-import fs from 'fs';
-import path from 'path';
+import fs from "fs";
+import path from "path";
 
-import { u } from 'unist-builder';
-import { visit } from 'unist-util-visit';
+import { u } from "unist-builder";
+import { visit } from "unist-util-visit";
 
-import { UnistNode, UnistTree } from '@/types/unist';
+import { UnistNode, UnistTree } from "@/types/unist";
 
-import Registry from '../public/r/registry.json';
+// registry.json doğrudan JSON, tip tanımlı değil, o yüzden "as any"
+import registryData from "../public/r/registry.json";
 
 export const styles = [
   {
-    name: 'default',
-    label: 'Default',
+    name: "default",
+    label: "Default",
   },
 ] as const;
 
@@ -19,18 +20,22 @@ export type Style = (typeof styles)[number];
 
 export function rehypeComponent() {
   return async (tree: UnistTree) => {
-    visit(tree, (node: UnistNode) => {
-      const { value: srcPath } = getNodeAttributeByName(node, 'src') || {};
+    // Registry.items yerine doğrudan data.items, tip güvenli hale getirilmiş
+    const registryItems: any[] = (registryData as any).items ?? [];
 
-      if (node.name === 'HookSource') {
-        const name = getNodeAttributeByName(node, 'name')?.value as string;
-        const fileName = getNodeAttributeByName(node, 'fileName')?.value as
+    visit(tree, (node: UnistNode) => {
+      const { value: srcPath } = getNodeAttributeByName(node, "src") || {};
+
+      // ----------------------------------------------------------
+      // Handle <HookSource /> components
+      // ----------------------------------------------------------
+      if (node.name === "HookSource") {
+        const name = getNodeAttributeByName(node, "name")?.value as string;
+        const fileName = getNodeAttributeByName(node, "fileName")?.value as
           | string
           | undefined;
 
-        if (!name && !srcPath) {
-          return null;
-        }
+        if (!name && !srcPath) return null;
 
         try {
           let src: string;
@@ -38,14 +43,14 @@ export function rehypeComponent() {
           if (srcPath) {
             src = srcPath as string;
           } else {
-            const component = Registry.items.find((item) => item.name === name);
+            const component = registryItems.find(
+              (item) => item.name === name
+            );
 
-            if (!component) {
-              return null;
-            }
+            if (!component) return null;
 
             src = fileName
-              ? component.files.find((file) => {
+              ? component.files.find((file: any) => {
                   return (
                     file.path.endsWith(`${fileName}.tsx`) ||
                     file.path.endsWith(`${fileName}.ts`)
@@ -54,150 +59,114 @@ export function rehypeComponent() {
               : component.files[0].path;
           }
 
-          // Prefer prebuilt registry JSON (public/r/<name>.json) which contains
-          // the file content produced by the registry build. This avoids
-          // reading arbitrary source files from disk during dev/runtime and
-          // makes the pipeline safer for client-only hosting (Vercel).
           let source: string;
 
           const prebuiltJsonPath = path.join(
             process.cwd(),
-            'public',
-            'r',
-            `${name}.json`,
+            "public",
+            "r",
+            `${name}.json`
           );
 
           try {
-            const raw = fs.readFileSync(prebuiltJsonPath, 'utf8');
+            const raw = fs.readFileSync(prebuiltJsonPath, "utf8");
             const parsed = JSON.parse(raw);
             if (parsed?.content) {
               source = parsed.content as string;
             } else {
-              // fallback to reading the original file if prebuilt doesn't contain content
               const filePath = path.join(process.cwd(), src);
-              source = fs.readFileSync(filePath, 'utf8');
+              source = fs.readFileSync(filePath, "utf8");
             }
-          } catch (err) {
-            // fallback: try reading the original source file
+          } catch {
             try {
               const filePath = path.join(process.cwd(), src);
-              source = fs.readFileSync(filePath, 'utf8');
+              source = fs.readFileSync(filePath, "utf8");
             } catch (e) {
               console.error(e);
               return null;
             }
           }
 
-          // Replace imports. A simple regex handles our current patterns.
-          source = source.replace(/@\/registry\//g, '@/components/');
-          source = source.replace(/\bexport\s+default\s+/g, 'export ');
+          // replace import patterns
+          source = source.replace(/@\/registry\//g, "@/components/");
+          source = source.replace(/\bexport\s+default\s+/g, "export ");
 
-          // Add code as children so that rehype can take over at build time.
+          // add code block node
           node.children?.push(
-            u('element', {
-              tagName: 'pre',
-              properties: {
-                __src__: src,
-              },
+            u("element", {
+              tagName: "pre",
+              properties: { __src__: src },
               children: [
-                u('element', {
-                  tagName: 'code',
-                  properties: {
-                    className: ['language-tsx'],
-                  },
-                  data: {
-                    meta: `event="copy_source_code"`,
-                  },
-                  children: [
-                    {
-                      type: 'text',
-                      value: source,
-                    },
-                  ],
+                u("element", {
+                  tagName: "code",
+                  properties: { className: ["language-tsx"] },
+                  data: { meta: `event="copy_source_code"` },
+                  children: [{ type: "text", value: source }],
                 }),
               ],
-            }),
+            })
           );
         } catch (error) {
           console.error(error);
         }
       }
 
-      if (node.name === 'HookPreview' || node.name === 'BlockPreview') {
-        const name = getNodeAttributeByName(node, 'name')?.value as string;
-
-        if (!name) {
-          return null;
-        }
+      // ----------------------------------------------------------
+      // Handle <HookPreview /> and <BlockPreview />
+      // ----------------------------------------------------------
+      if (node.name === "HookPreview" || node.name === "BlockPreview") {
+        const name = getNodeAttributeByName(node, "name")?.value as string;
+        if (!name) return null;
 
         try {
-          const component = Registry.items.find((item) => item.name === name);
-
-          if (!component) {
-            return null;
-          }
+          const component = registryItems.find((item) => item.name === name);
+          if (!component) return null;
 
           const src = component.files[0].path;
-
-          // Prefer prebuilt registry JSON (public/r/<name>.json) which contains
-          // the file content produced by the registry build. See above.
           let source: string;
 
           const prebuiltJsonPath = path.join(
             process.cwd(),
-            'public',
-            'r',
-            `${name}.json`,
+            "public",
+            "r",
+            `${name}.json`
           );
 
           try {
-            const raw = fs.readFileSync(prebuiltJsonPath, 'utf8');
+            const raw = fs.readFileSync(prebuiltJsonPath, "utf8");
             const parsed = JSON.parse(raw);
             if (parsed?.content) {
               source = parsed.content as string;
             } else {
               const filePath = path.join(process.cwd(), src);
-              source = fs.readFileSync(filePath, 'utf8');
+              source = fs.readFileSync(filePath, "utf8");
             }
-          } catch (err) {
+          } catch {
             try {
               const filePath = path.join(process.cwd(), src);
-              source = fs.readFileSync(filePath, 'utf8');
+              source = fs.readFileSync(filePath, "utf8");
             } catch (e) {
               console.error(e);
               return null;
             }
           }
 
-          // Replace imports. A simple regex handles our current patterns.
-          source = source.replace(/@\/registry\//g, '@/components/');
-          source = source.replace(/\bexport\s+default\s+/g, 'export ');
+          source = source.replace(/@\/registry\//g, "@/components/");
+          source = source.replace(/\bexport\s+default\s+/g, "export ");
 
-          // Add code as children so that rehype can take over at build time.
           node.children?.push(
-            u('element', {
-              tagName: 'pre',
-              properties: {
-                __src__: src,
-              },
+            u("element", {
+              tagName: "pre",
+              properties: { __src__: src },
               children: [
-                u('element', {
-                  tagName: 'code',
-                  properties: {
-                    className: ['language-tsx'],
-                  },
-                  data: {
-                    meta: `event="copy_usage_code"`,
-                  },
-                  children: [
-                    {
-                      type: 'text',
-                      value: source,
-                    },
-                  ],
+                u("element", {
+                  tagName: "code",
+                  properties: { className: ["language-tsx"] },
+                  data: { meta: `event="copy_usage_code"` },
+                  children: [{ type: "text", value: source }],
                 }),
               ],
-            }),
+            })
           );
         } catch (error) {
           console.error(error);
