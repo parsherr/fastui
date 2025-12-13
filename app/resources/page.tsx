@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Search } from 'lucide-react';
+import { SearchIcon } from 'lucide-react';
 
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { ResourceCard } from '@/components/resource-card';
@@ -50,7 +50,7 @@ export default function ResourcesPage() {
             </hgroup>
 
             <div className="w-full max-w-md mx-auto mb-8 relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <SearchIcon className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                     placeholder="Search resources..."
                     className="pl-9"
