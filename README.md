@@ -2,7 +2,10 @@
 
 **FastUI** is a modern, high-performance React & Next.js component and template library designed to help web developers build stunning interfaces with speed and ease. Built on top of the latest web technologies, it provides a collection of beautifully crafted, accessible, and customizable components.
 
-![FastUI](https://placehold.co/1200x400/101827/FFF?text=FastUI+Library)
+<!-- ![FastUI](https://placehold.co/1200x400/101827/FFF?text=FastUI+Library) -->
+
+![FastUI](https://www.fastui.site/og.webp)
+
 
 ## 🚀 Features
 
