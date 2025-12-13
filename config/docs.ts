@@ -7,8 +7,16 @@ export const docsConfig: DashboardConfig = {
       href: '/docs',
     },
     {
-      title: 'Showcase',
-      href: '/showcase',
+      title: 'Templates',
+      href: '/templates',
+    },
+    {
+      title: 'Blog',
+      href: 'https://blog.fastui.site',
+    },
+    {
+      title: 'Resources',
+      href: '/resources',
     },
   ],
   sidebarNav: [

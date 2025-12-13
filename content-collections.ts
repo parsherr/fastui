@@ -81,7 +81,7 @@ const showcases = defineCollection({
     });
     return {
       ...document,
-      slug: `/showcase/${document._meta.path}`,
+      slug: `/template/${document._meta.path}`,
       slugAsParams: document._meta.path,
       body: {
         raw: document.content,

@@ -1,7 +1,7 @@
 import { allShowcases } from 'content-collections';
 
 import { Marquee } from '@/components/magicui/marquee';
-import { ShowcaseCard } from '@/components/showcase-card';
+import { ShowcaseCard } from '@/components/templates-card';
 
 import { cn } from '@/lib/utils';
 
