@@ -1,35 +1,65 @@
-<img alt="Screenshot of the guarahooks hero with the copy-and-paste tagline" src="./public/og.webp" width="100%" style="border-radius: 16px">
+# FastUI
 
-<div align="center">
-  <a href="https://github.com/h3rmel/guarahooks"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/h3rmel/guarahooks?style=for-the-badge"></a>
-  <a href="https://github.com/h3rmel/guarahooks/blob/main/LICENSE.md"><img alt="License" src="https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge"></a>
-</div>
+**FastUI** is a modern, high-performance React & Next.js component and template library designed to help web developers build stunning interfaces with speed and ease. Built on top of the latest web technologies, it provides a collection of beautifully crafted, accessible, and customizable components.
 
-# guarahooks
+![FastUI](https://placehold.co/1200x400/101827/FFF?text=FastUI+Library)
 
-A free, open-source collection of reusable React hooks you can copy and paste into your apps.
+## 🚀 Features
 
-## Documentation
+- **Modern Tech Stack**: Powered by **Next.js 15**, **React 19**, and **Tailwind CSS 4**.
+- **Component Library**: A rich set of accessible and reusable components (powered by **Shadcn UI** & **Magic UI**).
+- **Production-Ready Templates**: Pre-built templates to kickstart your next project.
+- **TypeScript First**: Fully typed for a robust development experience.
+- **Performance Optimized**: components designed for optimal rendering and speed.
+- **Beautiful Design**: focus on aesthetics and user experience with smooth animations and modern styling.
 
-Visit https://guarahooks.com to view the documentation.
+## 🛠️ Tech Stack
 
-Need hooks fast? Check out our [CLI docs](https://guarahooks.com/docs/cli) for a
-command-line way to install them.
+- [Next.js 15](https://nextjs.org/) - The React Framework for the Web
+- [React 19](https://react.dev/) - The Library for Web and Native User Interfaces
+- [Tailwind CSS 4](https://tailwindcss.com/) - Rapidly build modern websites without ever leaving your HTML
+- [Shadcn UI](https://ui.shadcn.com/) - Beautifully designed components that you can copy and paste into your apps
+- [Framer Motion](https://www.framer.com/motion/) - Production-ready motion library for React
 
-## Requirements
+## 📦 Components
 
-This project requires **Node.js 18** or later and uses **pnpm** as the package manager. If you don't have Node 18 installed, run `nvm install` first, then `nvm use` to match the `.nvmrc` version. Install dependencies with `pnpm install`. The install script checks that you have pnpm **9.15.3** or newer and enforces pnpm usage via `pnpm dlx only-allow pnpm`.
+FastUI includes a growing collection of components including:
 
-## Contributing
+- **Layouts**: Responsive navigation, sidebars, and grid systems.
+- **UI Elements**: Buttons, cards, modals, dropdowns, and more.
+- **Magic Effects**: Interactive and animated components to wow your users.
+- [View all components](components)
 
-See our [contributing guide](https://github.com/h3rmel/guarahooks/blob/main/CONTRIBUTING.md) to learn how to contribute. Adding a hook usually takes about five minutes.
+## ⚡ Getting Started
 
-## Authors
+1. **Clone the repository:**
 
-<a href="https://github.com/h3rmel/guarahooks/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=h3rmel/guarahooks" />
-</a>
+   ```bash
+   git clone https://github.com/parsherr/fastui.git
+   ```
 
-## License
+2. **Install dependencies:**
 
-Licensed under the [MIT license](./LICENSE)
+   ```bash
+   pnpm install
+   ```
+
+3. **Run the development server:**
+
+   ```bash
+   pnpm dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## ✍️ Author
+
+Created by **[@parsherr](https://github.com/parsherr)**.

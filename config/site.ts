@@ -19,7 +19,7 @@ export const siteConfig = {
     'Template Library',
   ],
   version: 'v0.05',
-  ogImage: 'https://guarahooks.com/og.webp',
+  ogImage: 'https://fastui.site/og.webp',
 };
 
 export type SiteConfig = typeof siteConfig;

@@ -1,20 +1,20 @@
 {
-  "name": "guarahooks",
+  "name": "fastui",
   "version": "1.0.0",
   "private": true,
   "type": "module",
   "license": "MIT",
-  "homepage": "https://guarahooks.com",
+  "homepage": "https://github.com/parsherr/fastui",
   "author": {
-    "name": "Isaac Hermel Reginato",
-    "url": "https://github.com/h3rmel"
+    "name": "parsherr",
+    "url": "https://github.com/parsherr"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/h3rmel/guarahooks"
+    "url": "https://github.com/parsherr/fastui"
   },
   "bugs": {
-    "url": "https://github.com/h3rmel/guarahooks/issues"
+    "url": "https://github.com/parsherr/fastui/issues"
   },
   "engines": {
     "node": ">=20.0.0",
