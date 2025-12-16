@@ -62,7 +62,7 @@ export function CopyButton({
             ? {
               name: event,
               properties: {
-                name: src,
+                name: src ?? "", // Provide empty string default if deprecated/not needed or fix type upstream
                 code: value,
               },
             }
