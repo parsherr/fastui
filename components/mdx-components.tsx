@@ -44,6 +44,8 @@ const CustomLink = (props: React.ComponentProps<'a'>) => {
   );
 };
 
+import AlertDialogPreview from "@/components/previews/alert-dialog-preview";
+
 const components = {
   Accordion,
   AccordionContent,
@@ -53,6 +55,7 @@ const components = {
   TechStack,
   RepoDownload,
   TemplatePreview,
+  AlertDialogPreview,
   Image,
   BlurFade: BlurFade,
   h1: ({ className, ...props }: React.ComponentProps<'h1'>) => (
@@ -280,7 +283,7 @@ const components = {
           )}
           {...props}
         />
-        {__rawString__ && __src__ && (
+        {__rawString__ && (
           <CopyButton
             value={__rawString__}
             src={__src__}

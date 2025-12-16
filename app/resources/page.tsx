@@ -64,11 +64,11 @@ export default function ResourcesPage() {
                 className="w-full mb-12"
                 onValueChange={setActiveTab}
             >
-                <div className="flex justify-center">
-                    <TabsList className="flex-wrap h-auto gap-2 bg-transparent">
+                <div className="flex w-full items-start overflow-x-auto pb-2 sm:justify-center sm:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                    <TabsList className="flex h-auto w-max justify-start gap-2 bg-transparent px-4 sm:w-auto sm:flex-wrap sm:justify-center sm:px-0">
                         <TabsTrigger
                             value="all"
-                            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-2 rounded-full"
+                            className="flex-none rounded-full px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                         >
                             All
                         </TabsTrigger>
@@ -76,7 +76,7 @@ export default function ResourcesPage() {
                             <TabsTrigger
                                 key={cat}
                                 value={cat}
-                                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-4 py-2 rounded-full"
+                                className="flex-none rounded-full px-4 py-2 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
                             >
                                 {cat}
                             </TabsTrigger>

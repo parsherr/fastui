@@ -18,7 +18,7 @@ export function GithubLink() {
 
     async function fetchStars() {
       try {
-        const res = await fetch('https://api.github.com/repos/parsher/fastui');
+        const res = await fetch('https://api.github.com/repos/parsherr/fastui');
         if (!res.ok) return;
         const data = await res.json();
         if (mounted && typeof data.stargazers_count === 'number') {

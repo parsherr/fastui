@@ -57,6 +57,16 @@ export const docsConfig: DashboardConfig = {
       ],
     },
     {
+      title: 'Components',
+      items: [
+        {
+          title: 'Alert Dialog',
+          href: '/docs/components/alert-dialog',
+          items: [],
+        },
+      ],
+    },
+    {
       title: 'Templates',
       items: [
         {
