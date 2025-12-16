@@ -62,7 +62,7 @@ const AlertDialogTrigger = React.forwardRef<
 >(({ className, render, children, ...props }, ref) => (
     <AlertDialogPrimitive.Trigger ref={ref} asChild={!!render} {...props}>
         {render ? (
-            React.isValidElement(render) ? React.cloneElement(render as React.ReactElement, { children: children || (render as any).props.children }) : render
+            React.isValidElement(render) ? React.cloneElement(render as React.ReactElement<any>, { children: children || (render as any).props.children } as any) : render
         ) : (
             children
         )}
@@ -132,7 +132,7 @@ const AlertDialogClose = React.forwardRef<
 >(({ className, render, children, ...props }, ref) => (
     <AlertDialogPrimitive.Cancel ref={ref} asChild={!!render} {...props}>
         {render ? (
-            React.isValidElement(render) ? React.cloneElement(render as React.ReactElement, { children: children || (render as any).props.children }) : render
+            React.isValidElement(render) ? React.cloneElement(render as React.ReactElement<any>, { children: children || (render as any).props.children } as any) : render
         ) : (
             <div className={cn("mt-2 sm:mt-0", className)}>{children}</div>
         )}
