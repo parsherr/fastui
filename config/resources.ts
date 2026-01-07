@@ -16,6 +16,12 @@ export const resourcesConfig: ResourceCategory[] = [
         title: 'UI Libraries',
         items: [
             {
+                title: 'Aura UI',
+                description: '(PAID) A collection of high-quality, modern React components designed for rapid development and elegant aesthetics.',
+                href: 'https://www.aura.build/',
+                tags: ['React', 'Tailwind', 'Framer Motion'],
+            },
+            {
                 title: 'Magic UI',
                 description: 'A collection of React components to build beautiful landing pages.',
                 href: 'https://magicui.design/',
