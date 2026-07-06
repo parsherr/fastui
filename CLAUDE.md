@@ -54,7 +54,6 @@ content/
   pages/                     # Static MDX pages
   showcases/                 # Showcase entries (MDX frontmatter only)
 lib/
-  rehype-component.ts        # Rehype plugin used by content-collections
   utils.ts                   # cn() and other shared utilities
 ```
 

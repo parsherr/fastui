@@ -8,7 +8,6 @@ import remarkGfm from 'remark-gfm';
 import { createHighlighter } from 'shiki';
 import { visit } from 'unist-util-visit';
 
-import { rehypeComponent } from './lib/rehype-component';
 import { rehypeNpmCommand } from './lib/rehype-npm-command';
 
 const prettyCodeOptions: Options = {
@@ -112,7 +111,6 @@ const docs = defineCollection({
       remarkPlugins: [codeImport, remarkGfm],
       rehypePlugins: [
         rehypeSlug,
-        rehypeComponent,
         () => (tree) => {
           visit(tree, (node) => {
             if (node?.type === 'element' && node?.tagName === 'pre') {
@@ -212,7 +210,6 @@ const templates = defineCollection({
       remarkPlugins: [codeImport, remarkGfm],
       rehypePlugins: [
         rehypeSlug,
-        rehypeComponent,
         rehypeNpmCommand,
         [
           rehypeAutolinkHeadings,
