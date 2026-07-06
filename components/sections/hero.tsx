@@ -34,7 +34,7 @@ export function Hero() {
         if (mounted && typeof data.stargazers_count === 'number') {
           setGithubStars(data.stargazers_count);
         }
-      } catch (e) {
+      } catch {
         // noop
       }
     }

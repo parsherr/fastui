@@ -43,19 +43,13 @@ export async function generateMetadata({ params }: PageProps) {
       description: doc.description,
       type: 'article',
       url: `${siteConfig.url}/${doc.slug}`,
-      images: [
-        {
-          url: doc.image,
-          width: 1200,
-          height: 630,
-        },
-      ],
+      ...(doc.image ? { images: [{ url: doc.image, width: 1200, height: 630 }] } : {}),
       twitter: {
         card: 'summary_large_image',
         title: doc.title,
         description: doc.description,
-        images: [doc.image],
-        creator: '@h3rmel',
+        ...(doc.image ? { images: [doc.image] } : {}),
+        creator: '@parsherr',
       },
     },
   };

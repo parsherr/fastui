@@ -46,14 +46,6 @@ const AlertDialogPopup = React.forwardRef<
 ));
 AlertDialogPopup.displayName = "AlertDialogPopup";
 
-// Helper for render prop pattern
-const RenderChild = ({ render, children, ...props }: any) => {
-    if (React.isValidElement(render)) {
-        return React.cloneElement(render, props, children);
-    }
-    return <div {...props}>{children}</div>;
-};
-
 const AlertDialogTrigger = React.forwardRef<
     React.ElementRef<typeof AlertDialogPrimitive.Trigger>,
     React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Trigger> & {

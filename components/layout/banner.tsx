@@ -8,7 +8,7 @@ import { Icons } from '@/components/icons';
 
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
-var version = siteConfig.version
+const version = siteConfig.version
 
 export function Banner() {
   return (

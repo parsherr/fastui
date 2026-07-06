@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 
 import { cn } from '@/lib/utils';
 
-import { allTemplates } from '@/.content-collections/generated';
+import { allTemplates } from 'content-collections';
 
 export default function ShowcasePage() {
   return (

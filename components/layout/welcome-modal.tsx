@@ -13,7 +13,7 @@ import { encryptCookie, decryptCookie } from "@/lib/crypto"
 import Image from "next/image"
 import { siteConfig } from '@/config/site';
 
-var version = siteConfig.version
+const version = siteConfig.version
 
 export function WelcomeModal() {
   const [isOpen, setIsOpen] = useState(false)

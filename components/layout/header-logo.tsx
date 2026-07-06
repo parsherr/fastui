@@ -4,10 +4,6 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
 import { siteConfig } from '@/config/site';
-var version = siteConfig.version
-
-const guara = siteConfig.name.slice(0, 5);
-const hooks = siteConfig.name.slice(5);
 
 export function HeaderLogo() {
   return (

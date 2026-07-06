@@ -24,7 +24,7 @@ export function GithubLink() {
         if (mounted && typeof data.stargazers_count === 'number') {
           setStars(data.stargazers_count);
         }
-      } catch (e) {
+      } catch {
         // ignore - keep null fallback
       }
     }

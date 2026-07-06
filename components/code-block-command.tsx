@@ -109,7 +109,6 @@ export function CodeBlockCommand({
         className="w-full border-none gap-0"
         defaultValue={packageManager}
         onValueChange={(value) => {
-          console.log('value', value, packageManager);
           setConfig({
             ...config,
             packageManager: value as 'pnpm' | 'npm' | 'yarn' | 'bun',

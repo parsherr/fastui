@@ -24,7 +24,7 @@ interface CopyButtonProps extends ButtonProps {
   event?: Event['name'];
 }
 
-export async function copyToClipboardWithMeta(value: string, event?: Event) {
+export function copyToClipboardWithMeta(value: string, event?: Event) {
   navigator.clipboard.writeText(value);
   if (event) {
     trackEvent(event);

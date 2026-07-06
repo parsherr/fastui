@@ -1,5 +1,3 @@
-import { version } from "os";
-
 export const siteConfig = {
   name: 'fastui',
   url: 'https://fastui.site',
