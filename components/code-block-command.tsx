@@ -8,9 +8,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { cn } from '@/lib/utils';
 
-import { NpmCommands } from '@/types/unist';
-
 import { Icons } from './icons';
+
+type NpmCommands = {
+  __npmCommand__?: string;
+  __yarnCommand__?: string;
+  __pnpmCommand__?: string;
+  __bunCommand__?: string;
+};
 
 // Simple hooks implementation
 function useMounted() {
