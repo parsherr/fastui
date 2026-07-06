@@ -76,10 +76,10 @@ export function Hero() {
             'max-w-[18ch]',
           )}
         >
-          Tempalte and Component Library for Web Developers
+          Template and Component Library for Web Developers
         </h1>
         <p className={cn('text-sm lg:text-base max-w-[34ch]')}>
-          Free and open-source hooks build with{' '}
+          Free and open-source components built with{' '}
           <span className={cn('font-bold')}>React</span> and{' '}
           <span className={cn('font-bold')}>TypeScript</span>. Perfect for your
           next application. <span className={cn('font-bold')}>Shadcn</span>{' '}

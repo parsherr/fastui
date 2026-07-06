@@ -6,7 +6,6 @@ import { useMDXComponent } from '@content-collections/mdx/react';
 import { Callout } from '@/components/callout';
 import { CodeBlockCommand } from '@/components/code-block-command';
 import { CopyButton } from '@/components/copy-button';
-import RepoDownload from '@/components/repo-download';
 import TechStack from '@/components/tech-stack';
 import TemplatePreview from '@/components/template-preview';
 import {
@@ -21,6 +20,7 @@ import type { Event } from '@/lib/events';
 import { cn } from '@/lib/utils';
 
 import { BlurFade } from './magicui/blur-fade';
+import AlertDialogPreview from '@/components/previews/alert-dialog-preview';
 
 const CustomLink = (props: React.ComponentProps<'a'>) => {
   const { href = '', children, ...rest } = props;
@@ -44,8 +44,6 @@ const CustomLink = (props: React.ComponentProps<'a'>) => {
   );
 };
 
-import AlertDialogPreview from "@/components/previews/alert-dialog-preview";
-
 const components = {
   Accordion,
   AccordionContent,
@@ -53,7 +51,6 @@ const components = {
   AccordionTrigger,
   Callout,
   TechStack,
-  RepoDownload,
   TemplatePreview,
   AlertDialogPreview,
   Image,

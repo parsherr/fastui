@@ -1,38 +1,36 @@
 ---
 title: CLI
-description: Use the guarahooks CLI to add hooks to your project.
+description: Use the FastUI CLI to add components to your project.
 ---
 
 ## Requirements
 
-The CLI works with **Node.js 18** or newer and verifies this at runtime. A `.nvmrc` file specifies the expected Node version. If Node 18 isn’t installed, run `nvm install` and `nvm use`. We recommend pnpm **9.15.3** or newer. You can invoke the CLI with `npx` or install it globally using pnpm or npm.
+The CLI works with **Node.js 20** or newer. We recommend pnpm **9** or newer. You can invoke the CLI with `npx` or install it globally.
 
 ## add
 
-Use the `add` command to install a hook along with its dependencies.
+Use the `add` command to install a component along with its dependencies.
 
 ```bash
-npx guara-cli add [hook]
+npx fastui-cli add [component]
 ```
 
 ### Options
 
 ```txt
-Usage: guara-cli add [options] [hooks...]
+Usage: fastui-cli add [options] [components...]
 
-add a hook to your project
+add a component to your project
 
 Arguments:
-  hooks         the hooks to add or a url to the hook.
+  components      the components to add
 
 Options:
   -y, --yes           skip confirmation prompt. (default: false)
   -o, --overwrite     overwrite existing files. (default: false)
-  -c, --cwd <cwd>     the working directory. defaults to the current directory. (default: "/Users/shadcn/Desktop")
-  -a, --all           add all available hooks (default: false)
-  -p, --path <path>   the path to add the hook to.
+  -c, --cwd <cwd>     the working directory. defaults to the current directory.
+  -a, --all           add all available components (default: false)
+  -p, --path <path>   the path to add the component to.
   -s, --silent        mute output. (default: false)
-  --src-dir           use the src directory when creating a new project. (default: false)
-  --no-src-dir        do not use the src directory when creating a new project.
   -h, --help          display help for command
 ```

@@ -20,25 +20,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  async redirects() {
-    return [
-      {
-        source: '/hooks',
-        destination: '/docs/hooks',
-        permanent: true,
-      },
-      {
-        source: '/hooks/:path*',
-        destination: '/docs/hooks/:path*',
-        permanent: true,
-      },
-      {
-        source: '/r/:path([^.]*)',
-        destination: '/r/:path.json',
-        permanent: true,
-      },
-    ];
-  },
 };
 
 export default withContentCollections(nextConfig);

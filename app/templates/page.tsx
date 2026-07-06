@@ -20,7 +20,7 @@ export default function ShowcasePage() {
           Templates
         </h2>
         <h3 className="mx-auto mb-8 text-balance text-center text-lg font-medium tracking-tight text-muted-foreground">
-          Companies and indie-hackers choose guarahooks to build their apps.
+          Companies and indie-hackers choose FastUI to build their apps.
         </h3>
         <Input placeholder="Search Template" className='mb-4' />
       </hgroup>

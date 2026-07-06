@@ -1,5 +1,4 @@
 import { Hero } from '@/components/sections/hero';
-import { Showcase } from '@/components/sections/showcase';
 
 import { cn } from '@/lib/utils';
 
@@ -11,7 +10,6 @@ export default function Home() {
       )}
     >
       <Hero />
-      <Showcase />
     </section>
   );
 }
