@@ -2,6 +2,10 @@ import { visit } from 'unist-util-visit';
 
 import { UnistNode, UnistTree } from '@/types/unist';
 
+function str(value: unknown): string {
+  return typeof value === 'string' ? value : '';
+}
+
 export function rehypeNpmCommand() {
   return (tree: UnistTree) => {
     visit(tree, (node: UnistNode) => {
@@ -9,94 +13,47 @@ export function rehypeNpmCommand() {
         return;
       }
 
+      const raw = str(node.properties?.['__rawString__']);
+      if (!raw || !node.properties) return;
+
       // npm install.
-      if (node.properties?.['__rawString__']?.startsWith('npm install')) {
-        const npmCommand = node.properties?.['__rawString__'];
-        node.properties['__npmCommand__'] = npmCommand;
-        node.properties['__yarnCommand__'] = npmCommand.replace(
-          'npm install',
-          'yarn add',
-        );
-        node.properties['__pnpmCommand__'] = npmCommand.replace(
-          'npm install',
-          'pnpm add',
-        );
-        node.properties['__bunCommand__'] = npmCommand.replace(
-          'npm install',
-          'bun add',
-        );
+      if (raw.startsWith('npm install')) {
+        node.properties['__npmCommand__'] = raw;
+        node.properties['__yarnCommand__'] = raw.replace('npm install', 'yarn add');
+        node.properties['__pnpmCommand__'] = raw.replace('npm install', 'pnpm add');
+        node.properties['__bunCommand__'] = raw.replace('npm install', 'bun add');
       }
 
       // npx create-.
-      if (node.properties?.['__rawString__']?.startsWith('npx create-')) {
-        const npmCommand = node.properties?.['__rawString__'];
-        node.properties['__npmCommand__'] = npmCommand;
-        node.properties['__yarnCommand__'] = npmCommand.replace(
-          'npx create-',
-          'yarn create ',
-        );
-        node.properties['__pnpmCommand__'] = npmCommand.replace(
-          'npx create-',
-          'pnpm create ',
-        );
-        node.properties['__bunCommand__'] = npmCommand.replace(
-          'npx',
-          'bun x --bun',
-        );
+      if (raw.startsWith('npx create-')) {
+        node.properties['__npmCommand__'] = raw;
+        node.properties['__yarnCommand__'] = raw.replace('npx create-', 'yarn create ');
+        node.properties['__pnpmCommand__'] = raw.replace('npx create-', 'pnpm create ');
+        node.properties['__bunCommand__'] = raw.replace('npx', 'bun x --bun');
       }
 
       // npm create.
-      if (node.properties?.['__rawString__']?.startsWith('npm create')) {
-        const npmCommand = node.properties?.['__rawString__'];
-        node.properties['__npmCommand__'] = npmCommand;
-        node.properties['__yarnCommand__'] = npmCommand.replace(
-          'npm create',
-          'yarn create',
-        );
-        node.properties['__pnpmCommand__'] = npmCommand.replace(
-          'npm create',
-          'pnpm create',
-        );
-        node.properties['__bunCommand__'] = npmCommand.replace(
-          'npm create',
-          'bun create',
-        );
+      if (raw.startsWith('npm create')) {
+        node.properties['__npmCommand__'] = raw;
+        node.properties['__yarnCommand__'] = raw.replace('npm create', 'yarn create');
+        node.properties['__pnpmCommand__'] = raw.replace('npm create', 'pnpm create');
+        node.properties['__bunCommand__'] = raw.replace('npm create', 'bun create');
       }
 
-      // npx.
-      if (
-        node.properties?.['__rawString__']?.startsWith('npx') &&
-        !node.properties?.['__rawString__']?.startsWith('npx create-')
-      ) {
-        const npmCommand = node.properties?.['__rawString__'];
-        node.properties['__npmCommand__'] = npmCommand;
-        node.properties['__yarnCommand__'] = npmCommand;
-        node.properties['__pnpmCommand__'] = npmCommand.replace(
-          'npx',
-          'pnpm dlx',
-        );
-        node.properties['__bunCommand__'] = npmCommand.replace(
-          'npx',
-          'bun x --bun',
-        );
+      // npx (excluding npx create-).
+      if (raw.startsWith('npx') && !raw.startsWith('npx create-')) {
+        node.properties['__npmCommand__'] = raw;
+        node.properties['__yarnCommand__'] = raw;
+        node.properties['__pnpmCommand__'] = raw.replace('npx', 'pnpm dlx');
+        node.properties['__bunCommand__'] = raw.replace('npx', 'bun x --bun');
       }
 
       // npm run.
-      if (node.properties?.['__rawString__']?.startsWith('npm run')) {
-        const npmCommand = node.properties?.['__rawString__'];
-        node.properties['__npmCommand__'] = npmCommand;
-        node.properties['__yarnCommand__'] = npmCommand.replace(
-          'npm run',
-          'yarn',
-        );
-        node.properties['__pnpmCommand__'] = npmCommand.replace(
-          'npm run',
-          'pnpm',
-        );
-        node.properties['__bunCommand__'] = npmCommand.replace(
-          'npm run',
-          'bun',
-        );
+      if (raw.startsWith('npm run')) {
+        node.properties['__npmCommand__'] = raw;
+        node.properties['__yarnCommand__'] = raw.replace('npm run', 'yarn');
+        node.properties['__pnpmCommand__'] = raw.replace('npm run', 'pnpm');
+        node.properties['__bunCommand__'] = raw.replace('npm run', 'bun');
       }
     });
   };
