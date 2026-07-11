@@ -1,5 +1,20 @@
 # How to Add a New Component to Documentation
 
+## Quick way — generator script
+
+Run the generator to scaffold all files automatically:
+
+```bash
+pnpm generate component <name>    # e.g. pnpm generate component badge
+pnpm generate template  <name>    # e.g. pnpm generate template  dashboard
+```
+
+The script creates the preview stub, MDX doc, and wires `mdx-components.tsx` + `config/docs.ts` for you. It leaves `TODO:` markers in the generated files for the parts you still need to fill in (description, component source, external links). After editing, run `pnpm build:docs`.
+
+---
+
+## Manual steps
+
 Follow these 5 steps to add a new component to the documentation with a live preview.
 
 ## 1. Create the Component File

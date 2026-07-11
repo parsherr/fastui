@@ -1,5 +1,8 @@
+import Link from 'next/link';
+
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { ShowcaseCard } from '@/components/templates-card';
+import { buttonVariants } from '@/components/ui/button';
 import { Input } from "@/components/ui/input"
 
 import { cn } from '@/lib/utils';
@@ -22,7 +25,15 @@ export default function ShowcasePage() {
         <h3 className="mx-auto mb-8 text-balance text-center text-lg font-medium tracking-tight text-muted-foreground">
           Companies and indie-hackers choose FastUI to build their apps.
         </h3>
-        <Input placeholder="Search Template" className='mb-4' />
+        <div className="flex items-center gap-2 mb-4">
+          <Input placeholder="Search Template" />
+          <Link
+            href="/docs/contributing/add-template"
+            className={cn(buttonVariants({ variant: 'outline' }), 'shrink-0')}
+          >
+            + Add New
+          </Link>
+        </div>
       </hgroup>
       <div
         className={cn('grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3')}

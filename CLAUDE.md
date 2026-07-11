@@ -25,6 +25,9 @@ pnpm lint:fix          # ESLint with auto-fix
 pnpm typecheck         # tsc --noEmit
 pnpm check:quality     # typecheck + lint + prettier check combined
 pnpm format:write      # prettier auto-format
+
+pnpm generate component <name>   # scaffold a new component (preview + MDX + sidebar wiring)
+pnpm generate template  <name>   # scaffold a new template  (MDX + sidebar wiring)
 ```
 
 Git hooks (husky) run lint-staged on commit and enforce Conventional Commits via commitlint (`feat:`, `fix:`, `docs:`, etc.). Run `pnpm format:write && pnpm lint:fix` before committing.

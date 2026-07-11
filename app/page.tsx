@@ -4,11 +4,7 @@ import { cn } from '@/lib/utils';
 
 export default function Home() {
   return (
-    <section
-      className={cn(
-        'flex flex-col items-center justify-center grow overflow-x-hidden',
-      )}
-    >
+    <section className={cn('flex flex-col overflow-x-hidden')}>
       <Hero />
     </section>
   );

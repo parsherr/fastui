@@ -1,0 +1,111 @@
+---
+title: Adding a Template
+description: How to contribute a new template to FastUI.
+---
+
+## Quick start — generator
+
+The fastest way is the built-in generator. It creates the MDX file and wires the sidebar automatically.
+
+```bash
+pnpm generate template <name>
+```
+
+For example:
+
+```bash
+pnpm generate template dashboard
+```
+
+This single command will:
+
+- Create `content/docs/templates/dashboard.mdx` with the standard layout (video, download button, live preview button)
+- Add the sidebar entry to `config/docs.ts`
+
+Search for `TODO:` in the generated file to fill in the description, video URL, and GitHub / live-preview links, then run `pnpm build:docs` when done.
+
+---
+
+## Manual steps
+
+<Steps>
+
+<Step>Create the MDX documentation page</Step>
+
+- **Location:** `content/docs/templates/<name>.mdx`
+
+```mdx
+---
+title: Your Template
+description: A short description of this template.
+---
+
+A one-paragraph overview of what the template is and who it's for.
+
+<video
+  src="https://example.com/demo.mp4"
+  autoPlay
+  loop
+  muted
+  playsInline
+  style={{ width: '100%', height: '500px', objectFit: 'cover' }}
+  className="mt-6 block w-full overflow-hidden rounded-lg border shadow-sm"
+/>
+
+<div className="mt-4 flex gap-4">
+  <a
+    href="https://github.com/your-org/your-template"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex flex-1 items-center justify-center gap-2 rounded-lg border bg-black px-6 py-3 font-semibold text-white shadow-lg transition hover:bg-neutral-800 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+  >
+    Download
+  </a>
+  <a
+    href="https://your-template-preview.com"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-background text-foreground hover:bg-accent flex flex-1 items-center justify-center gap-2 rounded-lg border px-6 py-3 font-medium transition"
+  >
+    Live Preview
+  </a>
+</div>
+
+## Dependencies
+
+- Next.js 15
+- React 19
+- TailwindCSS 4
+```
+
+<Step>Add to the sidebar</Step>
+
+Open `config/docs.ts` and add an entry under the **Templates** section:
+
+```ts
+{
+  title: 'Your Template',
+  href: '/docs/templates/your-template',
+  items: [],
+},
+```
+
+The template also automatically appears on the `/templates` showcase page once `pnpm build:docs` is run, because that page reads `allTemplates` from content-collections.
+
+<Step>Add a preview image (optional)</Step>
+
+Add an `image` field to the MDX frontmatter. The image is shown on the `/templates` showcase cards.
+
+```mdx
+---
+title: Your Template
+description: A short description.
+image: /images/templates/your-template.png
+---
+```
+
+Place the image in `public/images/templates/`.
+
+</Steps>
+
+Then run `pnpm build:docs` to rebuild the content layer.

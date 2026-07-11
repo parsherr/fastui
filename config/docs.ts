@@ -39,16 +39,6 @@ export const docsConfig: DashboardConfig = {
           items: [],
         },
         {
-          title: 'Resources',
-          href: '/docs/resources',
-          items: [],
-        },
-        {
-          title: 'Open in v0',
-          href: '/docs/v0',
-          items: [],
-        },
-        {
           title: 'Changelog',
           href: '/docs/changelog',
           items: [],
@@ -72,6 +62,21 @@ export const docsConfig: DashboardConfig = {
         {
           title: 'Blog Template',
           href: '/docs/templates/blog-template',
+          items: [],
+        },
+      ],
+    },
+    {
+      title: 'Contributing',
+      items: [
+        {
+          title: 'Adding a Component',
+          href: '/docs/contributing/add-component',
+          items: [],
+        },
+        {
+          title: 'Adding a Template',
+          href: '/docs/contributing/add-template',
           items: [],
         },
       ],

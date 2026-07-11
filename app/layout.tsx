@@ -7,7 +7,7 @@ import '@/assets/globals.css';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { Banner } from '@/components/layout/banner';
-import { Footer } from '@/components/layout/footer';
+import { ConditionalFooter } from '@/components/layout/conditional-footer';
 import { Header } from '@/components/layout/header';
 import { PostHogProvider } from '@/components/posthog-provider';
 import { ThemeProvider } from '@/components/theme/theme-provider';
@@ -75,7 +75,7 @@ export default function RootLayout({
               <main className={cn('grow flex flex-col', 'size-full')}>
                 {children}
               </main>
-              <Footer />
+              <ConditionalFooter />
               <Toaster richColors position="bottom-center" duration={3000} />
               <SpeedInsights />
             </TooltipProvider>

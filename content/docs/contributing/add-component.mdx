@@ -1,0 +1,105 @@
+---
+title: Adding a Component
+description: How to contribute a new component to FastUI.
+---
+
+## Quick start — generator
+
+The fastest way is the built-in generator. It creates all the necessary files and wires everything up automatically.
+
+```bash
+pnpm generate component <name>
+```
+
+For example:
+
+```bash
+pnpm generate component data-table
+```
+
+This single command will:
+
+- Create `components/previews/data-table-preview.tsx` with a working stub
+- Create `content/docs/components/data-table.mdx` with the full tab template
+- Register the preview in `components/mdx-components.tsx`
+- Add the sidebar entry to `config/docs.ts`
+
+Search for `TODO:` in the generated files to find what still needs to be filled in, then run `pnpm build:docs` when done.
+
+---
+
+## Manual steps
+
+### 1. Create the component file
+
+Create the actual component source that users will copy into their projects.
+
+**Location:** `components/ui/<name>.tsx`
+
+- Use `cn()` from `lib/utils.ts` for class merging and `cva` for variants.
+- Use `React.forwardRef` and spread `{...props}` to keep components composable.
+- Add `"use client"` at the top for interactive components.
+
+### 2. Create the preview component
+
+Create a demo that shows the component in action. This is rendered live on the docs page.
+
+**Location:** `components/previews/<name>-preview.tsx`
+
+```tsx
+"use client";
+
+import { YourComponent } from "@/components/ui/your-component";
+
+export default function YourComponentPreview() {
+  return <YourComponent>Hello World</YourComponent>;
+}
+```
+
+### 3. Register the preview in mdx-components.tsx
+
+Open `components/mdx-components.tsx` and do two things.
+
+Import at the top (after the other preview imports):
+
+```tsx
+import YourComponentPreview from '@/components/previews/your-component-preview';
+```
+
+Add to the `components` object:
+
+```tsx
+const components = {
+  // ...
+  YourComponentPreview,
+};
+```
+
+### 4. Create the MDX documentation page
+
+**Location:** `content/docs/components/<name>.mdx`
+
+Use this template (replace `YourComponent` and `your-component` throughout):
+
+```mdx
+---
+title: Your Component
+description: Description of what this component does.
+---
+```
+
+The page should have two tab groups: one for Preview/Code and one for CLI/Manual installation. See `content/docs/components/alert-dialog.mdx` for a complete example.
+
+### 5. Add to the sidebar
+
+Open `config/docs.ts` and add an entry under the **Components** section:
+
+```ts
+{
+  title: 'Your Component',
+  href: '/docs/components/your-component',
+  items: [],
+},
+```
+
+Then run `pnpm build:docs` to rebuild the content layer.

@@ -32,6 +32,7 @@
     "check:quality": "pnpm typecheck && pnpm lint && pnpm format:check",
     "format:write": "prettier --write \"**/*.{ts,tsx}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx}\"",
+    "generate": "node scripts/generate.mjs",
     "preinstall": "pnpm dlx only-allow pnpm"
   },
   "dependencies": {

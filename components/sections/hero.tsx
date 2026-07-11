@@ -4,7 +4,6 @@ import { Suspense, useEffect, useState } from 'react';
 
 import Link from 'next/link';
 
-import { ScrollIndicator } from '@/components/design/scroll-indicator';
 import { Icons } from '@/components/icons';
 import { GridPattern } from '@/components/magicui/grid-pattern';
 import { NumberTicker } from '@/components/magicui/number-ticker';
@@ -28,7 +27,7 @@ export function Hero() {
 
     async function fetchStars() {
       try {
-        const res = await fetch('https://api.github.com/repos/parsher/fastui');
+        const res = await fetch('https://api.github.com/repos/parsherr/fastui');
         if (!res.ok) return;
         const data = await res.json();
         if (mounted && typeof data.stargazers_count === 'number') {
@@ -51,8 +50,8 @@ export function Hero() {
       id="hero"
       className={cn(
         'relative w-full h-[calc(100dvh-112px)]',
-        'flex flex-col items-center justify-center grow gap-8',
-        'border-b ',
+        'flex flex-col items-center justify-center gap-8',
+        'border-b overflow-hidden',
       )}
     >
       {/* Spotlight effect background */}
@@ -76,14 +75,10 @@ export function Hero() {
             'max-w-[18ch]',
           )}
         >
-          Template and Component Library for Web Developers
+          Start building your next project today
         </h1>
         <p className={cn('text-sm lg:text-base max-w-[34ch]')}>
-          Free and open-source components built with{' '}
-          <span className={cn('font-bold')}>React</span> and{' '}
-          <span className={cn('font-bold')}>TypeScript</span>. Perfect for your
-          next application. <span className={cn('font-bold')}>Shadcn</span>{' '}
-          inspired.
+          Free, open-source component and template library.
         </p>
       </hgroup>
       <div
@@ -132,12 +127,6 @@ export function Hero() {
           </TooltipContent>
         </Tooltip>
       </div>
-      <ScrollIndicator
-        className={cn(
-          'absolute left-8 lg:left-1/2 lg:-translate-x-1/2 bottom-8',
-        )}
-      />
-      {/* ...existing code... */}
       <GridPattern
         width={30}
         height={30}
