@@ -3,13 +3,14 @@
  * Scaffold a new component or template for FastUI.
  *
  * Usage:
- *   pnpm generate component <name>   — creates preview, MDX doc, wires mdx-components + sidebar
- *   pnpm generate template <name>    — creates MDX doc, wires sidebar
+ *   pnpm generate component <name>   — creates preview, MDX doc, wires mdx-components
+ *   pnpm generate template <name>    — creates MDX doc
  *
  * <name> is kebab-case (e.g. "data-table", "badge").
+ * Sidebar entries are driven by frontmatter in the MDX file — no config/docs.ts edits needed.
  */
 
-import { readFileSync, writeFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -28,6 +29,19 @@ function insertAfterLast(content, pattern, text) {
   const last = matches[matches.length - 1];
   const pos = last.index + last[0].length;
   return content.slice(0, pos) + text + content.slice(pos);
+}
+
+/** Read all MDX files in a dir and return the max sidebar_order found (default 0). */
+function maxSidebarOrder(dir) {
+  if (!existsSync(dir)) return 0;
+  let max = 0;
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith('.mdx')) continue;
+    const src = readFileSync(join(dir, f), 'utf8');
+    const m = src.match(/^sidebar_order:\s*(\d+)/m);
+    if (m) max = Math.max(max, parseInt(m[1], 10));
+  }
+  return max;
 }
 
 // ── CLI ────────────────────────────────────────────────────────────────────
@@ -66,16 +80,22 @@ export default function ${Pascal}Preview() {
   writeFileSync(previewPath, previewSrc);
   console.log(`✓ Created  components/previews/${name}-preview.tsx`);
 
-  // 2. MDX doc
-  const mdxPath = join(ROOT, 'content/docs/components', `${name}.mdx`);
+  // 2. MDX doc — sidebar_order auto-incremented from existing component docs
+  const mdxDir  = join(ROOT, 'content/docs/components');
+  const mdxPath = join(mdxDir, `${name}.mdx`);
   if (existsSync(mdxPath)) {
     console.error(`Already exists: content/docs/components/${name}.mdx`);
     process.exit(1);
   }
 
+  const nextOrder = maxSidebarOrder(mdxDir) + 1;
+
   const mdxSrc = `---
 title: ${Title}
 description: TODO: describe what this component does.
+sidebar_group: Components
+sidebar_group_order: 2
+sidebar_order: ${nextOrder}
 ---
 
 <Tabs defaultValue="preview">
@@ -150,45 +170,36 @@ npm install TODO: list-dependencies-here
   writeFileSync(mdxComponentsPath, src);
   console.log(`✓ Updated  components/mdx-components.tsx`);
 
-  // 4. Add sidebar entry in config/docs.ts
-  const docsPath = join(ROOT, 'config/docs.ts');
-  let docs = readFileSync(docsPath, 'utf8');
-  const sidebarEntry = `        {\n          title: '${Title}',\n          href: '/docs/components/${name}',\n          items: [],\n        },`;
-
-  if (!docs.includes(`'/docs/components/${name}'`)) {
-    docs = docs.replace(
-      /(title: 'Components',[\s\S]*?items: \[[\s\S]*?)(      \],)/,
-      `$1${sidebarEntry}\n$2`,
-    );
-  }
-
-  writeFileSync(docsPath, docs);
-  console.log(`✓ Updated  config/docs.ts`);
-
   console.log(`
 ✅ "${Title}" component scaffolded!
 
 TODOs (search for "TODO" in the generated files):
-  • components/ui/${name}.tsx           — implement the component (if not done)
+  • components/ui/${name}.tsx                — implement the component (if not done)
   • components/previews/${name}-preview.tsx  — update the demo
-  • content/docs/components/${name}.mdx — fill in description, deps, full source
+  • content/docs/components/${name}.mdx      — fill in description, deps, full source
 
-Then run:  pnpm build:docs`);
+Then run:  pnpm build:docs
+The sidebar will update automatically — no config/docs.ts changes needed.`);
 }
 
 // ── template ───────────────────────────────────────────────────────────────
 
 if (type === 'template') {
-  // 1. MDX doc
-  const mdxPath = join(ROOT, 'content/docs/templates', `${name}.mdx`);
+  const mdxDir  = join(ROOT, 'content/docs/templates');
+  const mdxPath = join(mdxDir, `${name}.mdx`);
   if (existsSync(mdxPath)) {
     console.error(`Already exists: content/docs/templates/${name}.mdx`);
     process.exit(1);
   }
 
+  const nextOrder = maxSidebarOrder(mdxDir) + 1;
+
   const mdxSrc = `---
 title: ${Title}
 description: TODO: describe this template.
+sidebar_group: Templates
+sidebar_group_order: 3
+sidebar_order: ${nextOrder}
 ---
 
 TODO: Add a one-paragraph description here.
@@ -240,26 +251,12 @@ TODO: Add a one-paragraph description here.
   writeFileSync(mdxPath, mdxSrc);
   console.log(`✓ Created  content/docs/templates/${name}.mdx`);
 
-  // 2. Add sidebar entry in config/docs.ts
-  const docsPath = join(ROOT, 'config/docs.ts');
-  let docs = readFileSync(docsPath, 'utf8');
-  const sidebarEntry = `        {\n          title: '${Title}',\n          href: '/docs/templates/${name}',\n          items: [],\n        },`;
-
-  if (!docs.includes(`'/docs/templates/${name}'`)) {
-    docs = docs.replace(
-      /(title: 'Templates',[\s\S]*?items: \[[\s\S]*?)(      \],)/,
-      `$1${sidebarEntry}\n$2`,
-    );
-  }
-
-  writeFileSync(docsPath, docs);
-  console.log(`✓ Updated  config/docs.ts`);
-
   console.log(`
 ✅ "${Title}" template scaffolded!
 
 TODOs (search for "TODO" in the generated file):
   • content/docs/templates/${name}.mdx — fill in description, video URL, GitHub/preview links
 
-Then run:  pnpm build:docs`);
+Then run:  pnpm build:docs
+The sidebar will update automatically — no config/docs.ts changes needed.`);
 }

@@ -1,14 +1,15 @@
 import { DocsSidebar } from '@/components/layout/docs-sidebar';
 
+import { buildSidebarNav } from '@/lib/sidebar';
 import { cn } from '@/lib/utils';
-
-import { docsConfig } from '@/config/docs';
 
 export default function DocsLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const sidebarNav = buildSidebarNav();
+
   return (
     <section
       className={cn(
@@ -26,7 +27,7 @@ export default function DocsLayout({
         )}
       >
         <div className={cn('no-scrollbar h-full overflow-auto')}>
-          <DocsSidebar items={docsConfig.sidebarNav} />
+          <DocsSidebar items={sidebarNav} />
         </div>
       </aside>
       <div className={cn('flex-1 min-w-0')}>{children}</div>

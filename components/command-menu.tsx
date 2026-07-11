@@ -23,6 +23,8 @@ import { cn } from '@/lib/utils';
 
 import { docsConfig } from '@/config/docs';
 
+import type { SidebarNavItem } from '@/types/docs';
+
 function useKeypress(options: {
   combo: string[];
   callback: (e: KeyboardEvent) => void;
@@ -54,7 +56,7 @@ function useKeypress(options: {
   }, [options]);
 }
 
-export function CommandMenu({ ...props }: DialogProps) {
+export function CommandMenu({ sidebarNav, ...props }: DialogProps & { sidebarNav: SidebarNavItem[] }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const { setTheme } = useTheme();
@@ -139,7 +141,7 @@ export function CommandMenu({ ...props }: DialogProps) {
                 </CommandItem>
               ))}
           </CommandGroup>
-          {docsConfig.sidebarNav.map((group) => (
+          {sidebarNav.map((group) => (
             <CommandGroup key={group.title} heading={group.title}>
               {group.items?.map((navItem) => (
                 <CommandItem

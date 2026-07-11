@@ -6,11 +6,14 @@ import { HeaderLogo } from '@/components/layout/header-logo';
 import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { buttonVariants } from '@/components/ui/button';
 
+import { buildSidebarNav } from '@/lib/sidebar';
 import { cn } from '@/lib/utils';
 
 import { docsConfig } from '@/config/docs';
 
 export function DesktopNavigation() {
+  const sidebarNav = buildSidebarNav();
+
   return (
     <section
       className={cn(
@@ -47,7 +50,7 @@ export function DesktopNavigation() {
         </ul>
       </div>
       <div className={cn('flex items-center gap-4')}>
-        <CommandMenu />
+        <CommandMenu sidebarNav={sidebarNav} />
         <hr className="h-6 border-l" />
         <GithubLink />
         <hr className="h-6 border-l" />

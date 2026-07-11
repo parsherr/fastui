@@ -10,10 +10,12 @@ import { cn } from '@/lib/utils';
 
 import { docsConfig } from '@/config/docs';
 
+import type { SidebarNavItem } from '@/types/docs';
+
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
 import { MobileLink } from './mobile-link';
 
-export function MobileLinks() {
+export function MobileLinks({ sidebarNav }: { sidebarNav: SidebarNavItem[] }) {
   const [open, setOpen] = React.useState(false);
 
   return (
@@ -62,7 +64,7 @@ export function MobileLinks() {
           </ul>
           {/* Docs Navigation */}
           <ul className={cn('flex flex-col gap-y-12')}>
-            {docsConfig.sidebarNav.map((item) => (
+            {sidebarNav.map((item) => (
               <div className={cn('flex flex-col gap-y-4')} key={item.title}>
                 <h4
                   className={cn(
